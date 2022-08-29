@@ -1,0 +1,76 @@
+//Build right wall
+polyCube -width 1 -height 1 -depth 1 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+scale -relative 1 20 24;
+move -relative 12 10 0;
+
+//Build left wall
+polyCube -width 1 -height 1 -depth 1 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+scale -relative 1 20 24;
+move -relative -12 10 0;
+
+//Build back wall
+polyCube -name "backWall" -width 1 -height 1 -depth 1 -subdivisionsX 2 -subdivisionsY 2 -subdivisionsZ 2 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+rotate -relative -objectSpace -forceOrderXYZ 0 90 0 ;
+scale -relative 1 20 24;
+move -relative 0 10 -12;
+select -r backWall.vtx[9:11] ;
+move -relative 0 13.143519 0 ;
+
+//Build front wall
+polyCube -name "frontWall" -width 1 -height 1 -depth 1 -subdivisionsX 2 -subdivisionsY 2 -subdivisionsZ 2 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+rotate -relative -objectSpace -forceOrderXYZ 0 90 0 ;
+scale -relative 1 20 24;
+move -relative 0 10 12;
+select -replace frontWall.vtx[9:11] ;
+move -relative 0 13.143519 0 ;
+
+//Build floor
+polyCube -width 26 -height 1 -depth 26 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+
+//Build Front left corner edge
+polyCube -width 1.5 -height 20 -depth 1.5 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative -12.17 10 12.17;
+
+//Build Front right corner edge
+polyCube -width 1.5 -height 20 -depth 1.5 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative 12.17 10 12.17;
+
+//Build back left corner edge
+polyCube -width 1.5 -height 20 -depth 1.5 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative -12.17 10 -12.17;
+
+//Build back right corner edge
+polyCube -width 1.5 -height 20 -depth 1.5 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative 12.17 10 -12.17;
+
+//Build front door
+polyCube -width 8 -height 15 -depth 1.9 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative 0 7.5 12;
+//doorknob
+polySphere -radius 0.5 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+scale -relative 1 1 -0.5;
+move -relative 2.33 6.75 13.416;
+//connecting cylinder
+polyCylinder -r 0.175 -h 0.75 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+rotate -relative -objectSpace -forceOrderXYZ 90 0 0 ;
+move -relative 2.33 6.75 13.075;
+
+//Build porch
+polyCube -width 11.2 -height 0.6 -depth 11.16 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative 0 -0.2 13.275;
+//Top layer of porch
+polyCube -width 8.75 -height 0.75 -depth 4.5 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative 0 0.175 14.4;
+
+//Build roof
+polyCube -width 25 -height 1 -depth 29 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative -6.5 26.2 0;
+rotate -relative -objectSpace -forceOrderXYZ 0 0 46.75 ;
+
+polyCube -width 25 -height 1 -depth 29 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative 6.5 26.2 0;
+rotate -relative -objectSpace -forceOrderXYZ 0 0 -46.75 ;
+//roofbeam
+polyCube -width 2.115 -height 2.115 -depth 29.7 -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -createUVs 4 -constructionHistory 1;
+move -relative 0 33 0;
+rotate -relative -objectSpace -forceOrderXYZ 0 0 45 ;
