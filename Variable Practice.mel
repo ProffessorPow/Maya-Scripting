@@ -1,0 +1,38 @@
+float $baseSize = 3;
+float $midSize = 2;
+float $headSize = 1;
+
+float $midHeight = (($baseSize*2) + $midSize);
+float $headHeight = (($midHeight + 1) + ($headSize*2));
+
+float $noselength = 9.5;
+
+float $armAngle = -86;
+
+//Creates the base snowballs for the snowmen
+polySphere -r $baseSize -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+move -r 0 $baseSize 0;
+
+polySphere -r $midSize -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+move -r 0 ($midHeight) 0;
+
+polySphere -r $headSize -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+move -r 0 ($headHeight) 0;
+
+//creates and places the variations of the nose
+polyCylinder -r 1 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+move -r 0 ($headHeight) 1;
+rotate -r -os -fo 90 0 0 ;
+scale -r 0.095891 0.095891 0.095891;
+scale -r 1 $noselength 1 ;
+
+//Creates and places the snowmans arms
+polyCylinder -r .18 -h 4 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+move -r 0 ($midHeight) 0;
+move -r 2.6 0 0 ;
+rotate -r -os -fo 0 0 $armAngle ;
+
+polyCylinder -r .18 -h 4 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+move -r 0 ($midHeight) 0;
+move -r -2.6 0 0 ;
+rotate -r -os -fo 0 0 $armAngle ;
