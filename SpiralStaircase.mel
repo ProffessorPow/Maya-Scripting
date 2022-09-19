@@ -1,0 +1,46 @@
+proc GenerateStaircase(
+    int $stairCount,
+    float $length,
+    float $width,
+    float $height,
+    float $stepSpacing,
+    float $overallSpacing,
+    float $overallRotation,
+    float $rotationAmount)
+{
+    // The for loop that contains the majority of functionality for GenerateStaircase()
+    for($staircaseSize = 0; $staircaseSize < $stairCount; $staircaseSize++)
+    {
+        //Creates info for a single steps creation with customizable Width Height and length parameters
+        polyCube -w $width -h $height -d $length -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1  ;
+        move -r 0 $stepSpacing 6 ;
+        /*Places pivot for the new cube at world orgin and rotates the individual step according the value
+        entered into $overallRotation*/
+        xform -worldSpace -rotatePivot 0 0 0;
+        rotate -r -os -fo 0 $overallRotation 0 ;
+
+    
+        /*
+        $stepSpacing containes the info for how much each step moves vertically for every
+        loop. Here it is incremented on using the variable of $overallSpacing allowing for
+        customizability of the Y distance between each step
+        */
+        $stepSpacing += $overallSpacing;
+        /*
+        Here $overallRotation is increased by the variable amount included in $rotationAmount
+        allowing for customizablity in the amount each step rotates around the world origin
+        in every loop
+        */
+        $overallRotation+= $rotationAmount;
+    }
+
+    /*This code creates the central pillar that the stairs stick out of, using the post-loop
+    value of #stepSpacing to determin the height of the cylinder and the distance to move it*/
+    polyCylinder -r 2 -h $stepSpacing -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+    move -r 0 ($stepSpacing/2) 0 ;
+    print ($stepSpacing);
+}
+
+//Calls the completed GenerateStaircase() Funtion.
+//Recommended values are (20 ,10 ,3 ,1 ,1, 1, 0, -15)
+GenerateStaircase(30, 10, 3, 1, 1, 1, 0, -15);
