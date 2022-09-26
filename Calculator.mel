@@ -1,0 +1,177 @@
+global proc Addition(float $inputs[])
+{
+    int $count = `size $inputs`;
+    float $sum = 0;
+
+    for ($i = 0; $i < $count; $i++)
+    {
+        print ($inputs[$i]);
+        $sum += $inputs[$i];
+        if ($i < ($count - 1))
+        {
+            print (" + ");
+        }
+    }
+    print (" = " + $sum + "\n");
+}
+
+//Calculates the 
+global proc Subtraction(float $inputs[])
+{
+    int $count = `size $inputs`;
+    float $difference = 0;
+    
+    for ($i = 0; $i < $count; $i++)
+    {
+        print ($inputs[$i]);
+        $difference -= $inputs[$i];
+        if ($i < ($count - 1))
+        {
+            print (" - ");
+        }
+    }
+    print (" = " + $difference + "\n");
+}
+
+//Calculates the product of an array
+global proc Multiplication(float $inputs[])
+{
+    int $count = `size $inputs`;
+    float $product = $inputs[0];
+    print ($inputs[0] + " x ");
+    
+    for ($i = 1; $i < $count; $i++)
+    {
+        print ($inputs[$i]);
+        $product *= $inputs[$i];
+        if ($i < ($count - 1))
+        {
+            print (" x ");
+        }
+    }
+    print (" = " + $product + "\n");
+}
+
+//Calculates the quotient of an array
+global proc Division(float $inputs[])
+{
+    int $count = `size $inputs`;
+    float $quotient = $inputs[0];
+    print ($inputs[0] + " / ");
+    
+    for ($i = 1; $i < $count; $i++)
+    {
+        print ($inputs[$i]);
+        $quotient /= $inputs[$i];
+        if ($i < ($count - 1))
+        {
+            print (" / ");
+        }
+    }
+    print (" = " + $quotient + "\n");
+}
+
+//Calculates the power of an array
+global proc ToThePowerOf(float $inputs[])
+{
+    int $count = `size $inputs`;
+
+    if ($count < 3)
+    {
+        float $power = `pow $inputs[0] $inputs[1]`;
+        print ($inputs[0] + " raised to the power of " + $inputs[1] + " is " + $power);
+    }
+    else
+    {
+        print ("To find the power of something please only input two values, The first is the base, the second the exponent");
+    }
+}
+
+//Calculates the median of an array
+global proc Median(float $inputs[])
+{
+    float $sortedInputs[] = `sort $inputs`;
+    int $count = `size $sortedInputs`;
+    
+    //Checks if array has even amount of elements
+    //if odd
+    if ($count % 2 != 0)
+    {
+        int $medianVal = ($count / 2);
+        print ("The median of the data set:\n");
+        print ($sortedInputs);
+        print ("is: " + $sortedInputs[$medianVal] + "\n");
+    }
+    //If even
+    else 
+    {
+        int $lesserMedianVal = ($count / 2) -1;
+        int $greaterMedianVal = ($count / 2);
+
+        float $aMedian = $sortedInputs[$lesserMedianVal] + $sortedInputs[$greaterMedianVal];
+        float $median = $aMedian / 2;
+
+        print ("The median of the data set:\n");
+        print ($sortedInputs);
+        print ("is: " + $median + "\n");
+    }
+}
+
+//Calculates the mean of an array
+global proc Mean(float $inputs[])
+{
+    int $count = `size $inputs`;
+    float $sum = 0;
+
+    for ($i = 0; $i < $count; $i++)
+    {
+        print ($inputs[$i]);
+        $sum += $inputs[$i];
+        if ($i < ($count - 1))
+        {
+            print (" + ");
+        }
+    }
+    float $mean = $sum / $count;
+    print (" = " + $sum + "\n" + $sum + " / " + $count);
+    print ("\nThe mean of the data set is: " + $mean + "\n");
+}
+
+//The main calculator function
+global proc Calculator(float $inputs[], int $calculatorFunction)
+{
+    if ($calculatorFunction == 1)
+    {
+        Addition($inputs);
+    }
+    else if ($calculatorFunction == 2)
+    {
+        Subtraction($inputs);
+    }
+    else if ($calculatorFunction == 3)
+    {
+        Multiplication($inputs);
+    }
+    else if ($calculatorFunction == 4)
+    {
+        Division($inputs);
+    }
+    else if ($calculatorFunction == 5)
+    {
+        ToThePowerOf($inputs);
+    }
+    else if ($calculatorFunction == 6)
+    {
+        Median($inputs);
+    }
+    else if ($calculatorFunction == 7)
+    {
+        Mean($inputs);
+    }
+    else 
+    {
+        print ("Please input a value from 1 - 7");
+    }
+}
+
+Calculator({}, 1);
