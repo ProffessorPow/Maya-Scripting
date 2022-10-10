@@ -1,4 +1,4 @@
-global proc Addition(float $inputs[])
+global proc string Addition(float $inputs[])
 {
     int $count = `size $inputs`;
     float $sum = 0;
@@ -12,16 +12,17 @@ global proc Addition(float $inputs[])
             print (" + ");
         }
     }
-    print (" = " + $sum + "\n");
+    return ($sum);
 }
 
 //Calculates the 
-global proc Subtraction(float $inputs[])
+global proc string Subtraction(float $inputs[])
 {
     int $count = `size $inputs`;
-    float $difference = 0;
+    float $difference = $inputs[0];
+    print ($inputs[0] + " - ");
     
-    for ($i = 0; $i < $count; $i++)
+    for ($i = 1; $i < $count; $i++)
     {
         print ($inputs[$i]);
         $difference -= $inputs[$i];
@@ -30,11 +31,11 @@ global proc Subtraction(float $inputs[])
             print (" - ");
         }
     }
-    print (" = " + $difference + "\n");
+    return ($difference);
 }
 
 //Calculates the product of an array
-global proc Multiplication(float $inputs[])
+global proc string Multiplication(float $inputs[])
 {
     int $count = `size $inputs`;
     float $product = $inputs[0];
@@ -49,11 +50,11 @@ global proc Multiplication(float $inputs[])
             print (" x ");
         }
     }
-    print (" = " + $product + "\n");
+    return ($product);
 }
 
 //Calculates the quotient of an array
-global proc Division(float $inputs[])
+global proc string Division(float $inputs[])
 {
     int $count = `size $inputs`;
     float $quotient = $inputs[0];
@@ -68,27 +69,27 @@ global proc Division(float $inputs[])
             print (" / ");
         }
     }
-    print (" = " + $quotient + "\n");
+    return ($quotient);
 }
 
 //Calculates the power of an array
-global proc ToThePowerOf(float $inputs[])
+global proc string ToThePowerOf(float $inputs[])
 {
     int $count = `size $inputs`;
 
     if ($count < 3)
     {
         float $power = `pow $inputs[0] $inputs[1]`;
-        print ($inputs[0] + " raised to the power of " + $inputs[1] + " is " + $power);
+        return ($inputs[0] + " raised to the power of " + $inputs[1] + " is " + $power);
     }
     else
     {
-        print ("To find the power of something please only input two values, The first is the base, the second the exponent");
+        return ("To find the power of something please only input two values, The first is the base, the second the exponent");
     }
 }
 
 //Calculates the median of an array
-global proc Median(float $inputs[])
+global proc string Median(float $inputs[])
 {
     float $sortedInputs[] = `sort $inputs`;
     int $count = `size $sortedInputs`;
@@ -113,12 +114,12 @@ global proc Median(float $inputs[])
 
         print ("The median of the data set:\n");
         print ($sortedInputs);
-        print ("is: " + $median + "\n");
+        return ($median);
     }
 }
 
 //Calculates the mean of an array
-global proc Mean(float $inputs[])
+global proc string Mean(float $inputs[])
 {
     int $count = `size $inputs`;
     float $sum = 0;
@@ -134,44 +135,90 @@ global proc Mean(float $inputs[])
     }
     float $mean = $sum / $count;
     print (" = " + $sum + "\n" + $sum + " / " + $count);
-    print ("\nThe mean of the data set is: " + $mean + "\n");
+    return ($mean);
 }
 
 //The main calculator function
-global proc Calculator(float $inputs[], int $calculatorFunction)
+global proc string Calculator(float $inputs[], int $calculatorFunction)
 {
     if ($calculatorFunction == 1)
     {
-        Addition($inputs);
+        return Addition($inputs);
     }
     else if ($calculatorFunction == 2)
     {
-        Subtraction($inputs);
+        return Subtraction($inputs);
     }
     else if ($calculatorFunction == 3)
     {
-        Multiplication($inputs);
+        return Multiplication($inputs);
     }
     else if ($calculatorFunction == 4)
     {
-        Division($inputs);
+        return Division($inputs);
     }
     else if ($calculatorFunction == 5)
     {
-        ToThePowerOf($inputs);
+        return ToThePowerOf($inputs);
     }
     else if ($calculatorFunction == 6)
     {
-        Median($inputs);
+        return Median($inputs);
     }
     else if ($calculatorFunction == 7)
     {
-        Mean($inputs);
+        return Mean($inputs);
     }
     else 
     {
-        print ("Please input a value from 1 - 7");
+        return ("Please input a value from 1 - 7");
     }
 }
 
-Calculator({}, 1);
+//Calculator({5,3}, 2);
+
+global proc Mathimize()
+{
+    string $operField = `optionVar -q "Operation"`;
+    string $in1Field = `optionVar -q "Input1"`;
+    string $in2Field = `optionVar -q "Input2"`;
+    string $resultField = `optionVar -q "Result"`;
+
+    string $oper = `intField -q -value $operField`;
+    string $in1 = `floatField -q -value $in1Field`;
+    string $in2 = `floatField -q -value $in2Field`;
+
+    string $result = Calculator({$in1, $in2}, $oper);
+
+    textField -e -text $result $resultField;
+}
+
+/*global proc AddInput()
+{
+    optionVar -stringValue "Input3" `floatField`;
+}*/
+
+global proc CalUI()
+{
+    string $mWindow = "calWindow";
+
+    if (`window -exists $mWindow`)
+    deleteUI $mWindow;
+
+    $mWindow = `window -title "Calculator"
+                                 -widthHeight 300 400
+                                 -resizeToFitChildren 1
+                                 $mWindow`;
+    string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+    button -parent $mColumn -label "MATHIMIZE" -command "Mathimize";
+    //button -parent $mColumn -label "Add Input" -command "AddInput";
+    optionVar -stringValue "Operation" `intField -parent $mColumn`;
+    optionVar -stringValue "Input1" `floatField -parent $mColumn`;
+    optionVar -stringValue "Input2" `floatField -parent $mColumn`;
+    optionVar -stringValue "Result" `textField -parent $mColumn -editable 0`;
+    
+
+    showWindow $mWindow;
+}
+
+CalUI();

@@ -1,0 +1,34 @@
+proc RandomMovement(float $minX, float $maxX, float $minY, float $maxY, float $minZ, float $maxZ)
+{
+    float $minXVal = $minX * -1;
+    float $maxXVal = $maxX;
+    float $minYVal = $minY * -1;
+    float $maxYVal = $maxY;
+    float $minZVal = $minZ * -1;
+    float $maxZVal = $maxZ;
+    
+    duplicate;
+
+    for ($i = 0; $i < 3; $i++)
+    {
+    float $xLimit = $minXVal + $maxXVal;
+    $xLimit = `rand $xLimit`;
+    $xLimit = $xLimit + $minX;
+    print ($xLimit + "\n");
+
+    float $yLimit = $minYVal + $maxYVal;
+    $yLimit = `rand $yLimit`;
+    $yLimit = $yLimit + $minY;
+    print ($yLimit + "\n");
+
+    float $zLimit = $minZVal + $maxZVal;
+    $zLimit = `rand $zLimit`;
+    $zLimit = $zLimit + $minZ;
+    print ($zLimit + "\n");
+
+    move -worldSpace -moveX $xLimit -moveY $yLimit -moveZ $zLimit;
+    }
+    
+}    
+
+RandomMovement(-5,5,2,15,-7,9);
