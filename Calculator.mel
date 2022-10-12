@@ -179,24 +179,19 @@ global proc string Calculator(float $inputs[], int $calculatorFunction)
 
 global proc Mathimize()
 {
-    string $operField = `optionVar -q "Operation"`;
-    string $in1Field = `optionVar -q "Input1"`;
-    string $in2Field = `optionVar -q "Input2"`;
+    string $operField = `optionVar -q "rCollectionField"`;
+    string $arrayData = `optionVar -q "Input1"`;
     string $resultField = `optionVar -q "Result"`;
 
     string $oper = `intField -q -value $operField`;
-    string $in1 = `floatField -q -value $in1Field`;
-    string $in2 = `floatField -q -value $in2Field`;
 
-    string $result = Calculator({$in1, $in2}, $oper);
+    print ($oper);
 
-    textField -e -text $result $resultField;
+    //string $result = Calculator({}, $oper);
+
+    //textField -e -text $result $resultField;
 }
 
-/*global proc AddInput()
-{
-    optionVar -stringValue "Input3" `floatField`;
-}*/
 
 global proc CalUI()
 {
@@ -210,11 +205,18 @@ global proc CalUI()
                                  -resizeToFitChildren 1
                                  $mWindow`;
     string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+
+    optionVar -stringValue "arrayField" `textField -parent $mColumn -placeholderText "Enter your data here..."`;
     button -parent $mColumn -label "MATHIMIZE" -command "Mathimize";
-    //button -parent $mColumn -label "Add Input" -command "AddInput";
-    optionVar -stringValue "Operation" `intField -parent $mColumn`;
-    optionVar -stringValue "Input1" `floatField -parent $mColumn`;
-    optionVar -stringValue "Input2" `floatField -parent $mColumn`;
+    optionVar -stringValue "rCollectionField" `radioCollection "rCollection"`;
+    radioButton -parent $mColumn -collection "rCollection";
+    radioButton;
+    radioButton;
+    radioButton;
+    radioButton;
+    radioButton;
+    radioButton;
+    
     optionVar -stringValue "Result" `textField -parent $mColumn -editable 0`;
     
 

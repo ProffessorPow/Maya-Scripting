@@ -38,7 +38,6 @@ proc GenerateStaircase(
     value of #stepSpacing to determin the height of the cylinder and the distance to move it*/
     polyCylinder -r 2 -h $stepSpacing -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
     move -r 0 ($stepSpacing/2) 0 ;
-    print ($stepSpacing);
 }
 
 //Calls the completed GenerateStaircase() Funtion.

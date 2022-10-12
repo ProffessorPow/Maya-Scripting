@@ -9,26 +9,88 @@ proc RandomMovement(float $minX, float $maxX, float $minY, float $maxY, float $m
     
     duplicate;
 
-    for ($i = 0; $i < 3; $i++)
+    string $objects[] = `ls -selection`;
+    int $loopAmount = `size $objects`;
+    print ($loopAmount);
+
+
+    for ($i = 0; $i < $loopAmount; $i++)
     {
-    float $xLimit = $minXVal + $maxXVal;
-    $xLimit = `rand $xLimit`;
-    $xLimit = $xLimit + $minX;
-    print ($xLimit + "\n");
+        float $xLimit = $minXVal + $maxXVal;
+        $xLimit = `rand $xLimit`;
+        $xLimit = $xLimit + $minX;
+        print ($xLimit + "\n");
 
-    float $yLimit = $minYVal + $maxYVal;
-    $yLimit = `rand $yLimit`;
-    $yLimit = $yLimit + $minY;
-    print ($yLimit + "\n");
+        float $yLimit = $minYVal + $maxYVal;
+        $yLimit = `rand $yLimit`;
+        $yLimit = $yLimit + $minY;
 
-    float $zLimit = $minZVal + $maxZVal;
-    $zLimit = `rand $zLimit`;
-    $zLimit = $zLimit + $minZ;
-    print ($zLimit + "\n");
-
-    move -worldSpace -moveX $xLimit -moveY $yLimit -moveZ $zLimit;
+        float $zLimit = $minZVal + $maxZVal;
+        $zLimit = `rand $zLimit`;
+        $zLimit = $zLimit + $minZ;
+        
+        move -worldSpace -moveX $xLimit -moveY $yLimit -moveZ $zLimit $objects[$i];
     }
-    
 }    
 
-RandomMovement(-5,5,2,15,-7,9);
+global proc RandButton()
+{
+    string $xMin = `optionVar -q "minXVal"`;
+    string $xMax = `optionVar -q "maxXVal"`;
+    string $yMin = `optionVar -q "minYVal"`;
+    string $yMax = `optionVar -q "maxYVal"`;
+    string $zMin = `optionVar -q "minZVal"`;
+    string $zMax = `optionVar -q "maxZVal"`;
+
+    string $smolX = `floatField -q -value $xMin`;
+    string $bigX = `floatField -q -value $xMax`;
+    string $smolY = `floatField -q -value $yMin`;
+    string $bigY = `floatField -q -value $yMax`;
+    string $smolZ = `floatField -q -value $zMin`;
+    string $bigZ = `floatField -q -value $zMax`;
+
+    RandomMovement($smolX, $bigX, $smolY, $bigY, $smolZ, $bigZ);
+}
+
+global proc RandomPlacementUI()
+{
+
+    string $mWindow = "randWindow";
+
+    if (`window -exists $mWindow`)
+    deleteUI $mWindow;
+
+    $mWindow = `window -title "Random Object Placement"
+                              -widthHeight 300 400
+                              -resizeToFitChildren 1
+                              $mWindow`;
+    string $mColumn = `columnLayout -parent $mWindow -adjustableColumn 1`;
+
+    separator;
+    text "Minimum X Value";
+    optionVar -stringValue "minXVal" `floatField -parent $mColumn`;
+    separator;
+    text "Maximum X Value";
+    optionVar -stringValue "maxXVal" `floatField -parent $mColumn`;
+    separator;
+    text "Minimum Y Value";
+    optionVar -stringValue "minYVal" `floatField -parent $mColumn`;
+    separator;
+    text "Maximum X Value";
+    optionVar -stringValue "maxYVal" `floatField -parent $mColumn`;
+    separator;
+    text "Minimum Z Value";
+    optionVar -stringValue "minZVal" `floatField -parent $mColumn`;
+    separator;
+    text "Maximum X Value";
+    optionVar -stringValue "maxZVal" `floatField -parent $mColumn`;
+    separator;
+
+    button -parent $mColumn -label "Randomize" -command "RandButton";
+
+
+    showWindow $mWindow;
+
+}
+
+RandomPlacementUI();
